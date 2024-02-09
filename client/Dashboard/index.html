@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+
+    <!-- -----adding datatable style cdn-------- -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
+    <!-- ----adding jQuery cdn---- -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <!-- --------adding datatables cdn-------- -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+
+        <!-- Pie chart -->
+
+        window.onload = function () {
+            // Initial data for the pie chart
+            var initialData = countStatusOptions();
+
+            // Function to update the chart with new data
+            function updateChart() {
+                var newData = countStatusOptions();
+                var options = {
+                    animationEnabled: true,
+                    data: [{
+                        type: "doughnut",
+                        innerRadius: "80%",
+                        showInLegend: true,
+                        legendText: "{label}",
+                        indexLabel: "{label}: #percent%",
+                        dataPoints: newData
+                    }]
+                };
+                $("#chartContainer").CanvasJSChart(options);
+            }
+
+            // Initial rendering of the chart with the initial data
+            updateChart();
+
+            // Example of updating the chart after a certain event or user action
+            $("#example").on("change", "select", function () {
+                updateChart();
+            });
+
+            function countStatusOptions() {
+                // Get the data from the table
+                var statusOptions = {
+                    "1": 0, // Pending
+                    "2": 0, // Reject
+                };
+
+                $("#example tbody tr").each(function () {
+                    var status = $(this).find("td:eq(5) select").val();
+                    statusOptions[status]++;
+                });
+
+                // Convert to percentage
+                var totalCount = Object.values(statusOptions).reduce((acc, count) => acc + count, 0);
+                var percentageOptions = Object.entries(statusOptions).map(([option, count]) => ({
+                    label: getStatusLabel(option),
+                    y: (count / totalCount) * 100
+                }));
+
+                return percentageOptions;
+            }
+            // option
+            function getStatusLabel(option) {
+                switch (option) {
+                    case "1":
+                        return "acceptance-pending";
+                    case "2":
+                        return "invoice-pending";
+                    default:
+                        return "";
+                }
+            }
+            $('select').on('change', function () {
+                var selectedValue = $(this).val();
+                var colorClass = '';
+
+                switch (selectedValue) {
+                    case '1':
+                        colorClass = 'acceptance-pending';
+                        break;
+                    case '2':
+                        colorClass = 'invoice-pending';
+                        break;
+                    default:
+                        colorClass = ''; // Default color if none matches
+                        break;
+                }
+
+                $(this).closest('tr').find('.colorTextBox').removeClass().addClass('colorTextBox ' + colorClass);
+            });
+
+            // Initial call to set the initial color
+            $('select').trigger('change');
+        };
+    </script>
+</head>
+
+<body>
+
+    <!-- --------topbar--------- -->
+    <div class="topbar">
+        <div class="left-header">
+            <div class="logo">
+                <span id="logo">Vendor Digitization</span>
+            </div>
+            <!-- <a href="" class="indent-logo icon"><i class="fa-solid fa-indent"></i></a> -->
+        </div>
+        <div class="right-header">
+            <ul class="right-nav">
+                <li class="right-nav-link">
+                    <a href="#"><i class="fa-regular fa-comments"></i></a>
+                </li>
+                <li class="right-nav-link">
+                    <a href="#"><i class="fa-regular fa-envelope"></i></i></a>
+                </li>
+                <li class="right-nav-link">
+                    <a href="#"><i class="fa-regular fa-bell"></i></a>
+                </li>
+                <li class="right-nav-link">
+                    <a href="#"><i class="fa-solid fa-circle-user"></i></a>
+                </li>
+                <li class="right-nav-link">
+                    <div class="select-input icon">
+                        <select name="" id="select">
+                            <option value="">Supplier User 1</option>
+                            <option value="">Supplier User 2</option>
+                            <option value="">Supplier User 3</option>
+                        </select>
+                    </div>
+                </li>
+                <li class="right-nav-link">
+                    <a href="#"><i class="fa-solid fa-book-open"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- -----------sidebar------------ -->
+    <div class="sidebar">
+        <ul class="sidebar-list margin-top">
+            <li class="dashboard sidebar-list-item">
+                <a href="#"><i class="fa-solid fa-gauge-high"></i><span class="sidebar-text">Dashboards</span></a>
+            </li>
+            <li class="RFQS sidebar-list-item">
+                <a href="/VendorManagement/RFQ/RFQ.html"><i class="fa-regular fa-clipboard"></i><span
+                        class="sidebar-text">RFQS</span></a>
+            </li>
+            <li class="auction sidebar-list-item">
+                <a href="#"><i class="fa-solid fa-volume-high"></i><span class="sidebar-text">Auctions</span></a>
+            </li>
+            <li class="purchase- order sidebar-list-item">
+                <a href="/VendorManagement/PurchaseOrder/purchaseorder.html"><i
+                        class="fa-regular fa-credit-card"></i><span class="sidebar-text">Purchase
+                        Orders</span></a>
+            </li>
+            <li class="rate-contracts sidebar-list-item">
+                <a href="#"><i class="fa-regular fa-circle-check"></i><span class="sidebar-text">Rate
+                        Contracts</span></a>
+            </li>
+            <li class="invoice sidebar-list-item">
+                <a href="/VendorManagement/Invoices/invoices.html"><i class="fa-regular fa-file-lines"></i><span
+                        class="sidebar-text">Invoices</span></a>
+            </li>
+            <li class="GRN sidebar-list-item">
+                <a href="#"><i class="fa-solid fa-cart-flatbed-suitcase"></i><span class="sidebar-text">GRN</span></a>
+            </li>
+            <li class="catalogue sidebar-list-item">
+                <a href="#"><i class="fa-regular fa-user"></i><span class="sidebar-text">Catalogue</span></a>
+            </li>
+            <li class="profile sidebar-list-item">
+                <a href="/VendorManagement/Profile/profile.html"><i class="fa-regular fa-user"></i><span
+                        class="sidebar-text">Profile</span></a>
+            </li>
+            <li class="tickets sidebar-list-item">
+                <a href="#"><i class="fa-solid fa-ticket"></i><span class="sidebar-text">Tickets</span></a>
+            </li>
+        </ul>
+    </div>
+
+    <!--------------main---------------->
+    <div class="dashboard-content">
+        <div class="main">
+
+            <!-- -----dashboard---- -->
+            <div class="Dashboards">
+                <div class="heading">
+                    <h3>Dashboard</h3>
+                </div>
+                <div class="charts">
+                    <div class=" chart">
+                        <div class="bar-chart-header">
+                            <p class="chart-heading">Month Wise Business</p>
+                            <select name="year" id="years">2024
+                                <option value="">2012</option>
+                                <option value="">2013</option>
+                                <option value="">2014</option>
+                                <option value="">2015</option>
+                                <option value="">2016</option>
+                                <option value="">2017</option>
+                                <option value="">2018</option>
+                                <option value="">2019</option>
+                                <option value="">2020</option>
+                                <option value="">2021</option>
+                                <option value="">2022</option>
+                                <option value="">2023</option>
+                                <option value="">2024</option>
+                                <option value="">2025</option>
+                                <option value="">2026</option>
+                                <option value="">2027</option>
+                            </select>
+                        </div>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                    <div class="chart" id="doughnut-chart">
+                        <p class="chart-heading">Invoice Under Process</p>
+                        <canvas id="doughnut"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--Pending Action-->
+
+            <div class="main-content">
+                <h2>Pending Action/PO </h2>
+                <div class="content">
+                    <table id="example" class="display">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Project</th>
+                                <th>Priority</th>
+                                <th>Total Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>
+                                    <select>
+                                        <option value="1">High
+                                        </option>
+                                        <option value="2">Medium
+                                        </option>
+                                        <option value="3">Low
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>Rs.59</td>
+                                <td>2012-08-06</td>
+                                <td>
+                                    <select class="colorTextBox">
+                                        <option value="1">accpetance-pending</option>
+                                        <option value="2">invoice-pending</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Code</th>
+                                <th>Project</th>
+                                <th>Priority</th>
+                                <th>Total Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div id="chartContainer"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- --------javascript--------- -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="chart1.js"></script>
+    <script src="chart2.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
