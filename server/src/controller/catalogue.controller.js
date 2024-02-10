@@ -12,10 +12,8 @@ const catalogueModify = asyncHandler(async(req, res) => {
         products
     }
 
-    // Add logic to modify catalogue data in the database
     const updatedCatalogue = await catalogueModel.update({ customer, supplier, currency, products });
 
-    // Send response
     res.status(200).json(apiResponse(true, 'Catalogue modified successfully', updatedCatalogue));
 });
 
@@ -26,15 +24,13 @@ const catalogueFetch = asyncHandler(async(req, res) => {
         throw new apiError(400, "Email is required");
     }
 
-    // Add logic to fetch catalogue data from the database
     const catalogue = await catalogueModel.findByEmail(email);
 
     if (!catalogue) {
-        throw new apiError(404, "Catalogue not found");
+        throw new apiError(404, "USER not found");
     }
 
-    // Send response
-    res.status(200).json(apiResponse(true, 'Catalogue fetched successfully', catalogue));
+    res.status(200).json(new apiResponse(200, catalogue ,'Catalogue fetched successfully'));
 });
 
 
