@@ -5,7 +5,12 @@ import { catalogueModel } from '../models/catalogue.models.js';
 
 const catalogueModify = asyncHandler(async(req, res) => {
     const { customer, supplier, currency, products } = req.body;
-   
+    const data = {
+        customer,
+        supplier,
+        currency,
+        products
+    }
 
     // Add logic to modify catalogue data in the database
     const updatedCatalogue = await catalogueModel.update({ customer, supplier, currency, products });
