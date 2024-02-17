@@ -8,7 +8,7 @@ const router=Router()
 
 router.route("/dashboard/c:/email/").patch(dashBoardModify)
 router.route("/dashboard/c:/email/").get(dashBoardFetch)
-router.route("/catalogue/c:/email/").patch(catalogueModify)
-router.route("/catalogue/c:/email/").get(catalogueFetch)
+router.route("/catalogue").patch(catalogueModify)
+router.route("/catalogue").get(catalogueFetch)
 
 export default router;

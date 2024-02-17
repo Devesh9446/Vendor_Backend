@@ -8,7 +8,7 @@ new Chart(ctx, {
     datasets: [{
       label: '# of Business',
       backgroundColor: barColor,
-      data: [0, 1100000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  
+      data: [0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  
     }]
   },
   options: {

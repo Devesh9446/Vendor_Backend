@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const userSchema = new mongoose.Schema({
     code:{
         type:String,
-        required:true,    
+        required:true, 
     },
     project:{
         type:String,

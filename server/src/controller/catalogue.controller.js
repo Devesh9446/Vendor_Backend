@@ -4,19 +4,12 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { catalogueModel } from '../models/catalogue.models.js';
 
 const catalogueModify = asyncHandler(async(req, res) => {
-    const { customer, supplier, currency, products } = req.body;
-    const data = {
-        customer,
-        supplier,
-        currency,
-        products
-    }
+    const { price,customer_visibility } = req.body;
 
     const updatedCatalogue = await catalogueModel.update({ customer, supplier, currency, products });
 
-    res.status(200).json(apiResponse(true, 'Catalogue modified successfully', updatedCatalogue));
+    res.status(200).json(apiResponse(200, updatedCatalogue, 'Catalogue modified successfully'));
 });
-
 
 const catalogueFetch = asyncHandler(async(req, res) => {
     const { email } = req.params;
