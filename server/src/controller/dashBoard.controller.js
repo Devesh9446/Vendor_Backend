@@ -19,7 +19,7 @@ const dashBoardModify=asyncHandler(async(req,res)=>{
         },
         {
             new:true,
-        }
+        }  
     )
     if(!user){
         throw new apiError(400,"User Not Found")

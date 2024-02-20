@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    
+}
+/* Main Content */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-content {
+    width: 76vw;
+    position: relative;
+    background: rgb(255, 255, 255);
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.main-content h2{
+    font-size: 20px;
+    border:2px inset rgb(239, 236, 241);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5px;
+    padding-left: 20px;
+}
+.content{
+    display: flex;
+    flex-direction: row; /* Stack content vertically */
+    align-items: center;
+    justify-content: space-between;
+}
+
+table {
+    font-size: 14px;
+    width: 100%;
+    margin-right: 20px; /* Adjust the margin between table and chart */
+}
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+select option[value="1"] {
+  background-color: white;
+  color: black;
+}
+
+select option[value="2"] {
+  background-color: white;
+  color: black;
+}
+
+select option[value="3"] {
+  background-color: white;
+  color: black;
+}
+
+select option[value="4"] {
+  background-color: white;
+  color: black;
+}
+
+/* Example styling for the text box */
+.colorTextBox {
+  width: 150px; /* Set your desired width */
+  padding: 7px;
+}
+
+/* Example styling for individual text boxes */
+.colorTextBox.accepted {
+  background-color: rgb(245, 235, 217);
+  color: orange;
+  font-weight: bold;
+}
+
+.colorTextBox.inProgress {
+  background-color: rgb(245, 235, 217);
+  color: orange;
+  font-weight: bold;
+}
+
+
+.colorTextBox.released {
+  background-color: rgba(31, 31, 243, 0.852);
+  color: white;
+}
+
+.colorTextBox.completed {
+  background-color: rgba(184, 229, 184, 0.882);
+  color: rgb(2, 109, 2);
+  font-weight: bold;
+}
+
+#example {
+    height: 34vh;
+    width: 74vw;
+    background: rgb(246, 246, 244);
+    position: relative;
+    margin-right: 20px;
+}
+.main-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border: 1px solid #d2d2d3;
+    border-radius: 5px;
+    box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card:first-child {
+    border-left: 7px solid #246dec;
+  }
+  
+  .card:nth-child(2) {
+    border-left: 7px solid #f5b74f;
+  }
+  
+  .card:nth-child(3) {
+    border-left: 7px solid #246dec;
+  }
+  
+  .card > span {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .card-inner > p {
+    font-size: 15px;
+  }
+  
+  .card-inner > span {
+    font-size: 27px;
+  }
