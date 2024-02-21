@@ -26,7 +26,7 @@ const dashboardCreate=asyncHandler(async(req,res)=>{
     }]
     const new_data=await dashboardModel.create(data);
     res.status(200).json(new apiResponse(200,new_data,"data saved successfully"))
-})
+});
 const dashboard=asyncHandler(async(req,res)=>{
     const {supplierUser,year} =req.param
     if(!supplierUser){
@@ -35,7 +35,7 @@ const dashboard=asyncHandler(async(req,res)=>{
     if(!year){
         throw new apiError(400,"year is required");
     }
-    const data=dashboardModel.find({year:year,supplierUser:supplierUser})
+    const data=await dashboardModel.find({year:year,supplierUser:supplierUser})
     res.send(200).json(new apiResponse(200,data,"data send seuccessfully"))
 })
 

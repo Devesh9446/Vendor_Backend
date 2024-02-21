@@ -26,7 +26,7 @@ const purchaseOrderModify = asyncHandler(async (req, res) => {
   if (!status) {
     throw new apiError(400, "");
   }
-  const data = purchaseOrderModel.findBysupplierUserAndUpdate(
+  const data =await purchaseOrderModel.findBysupplierUserAndUpdate(
     supplierUser,
     {
       $set: {

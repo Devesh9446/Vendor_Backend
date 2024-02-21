@@ -25,7 +25,7 @@ const purchaseOrderModify = asyncHandler(async (req, res) => {
   if (!status) {
     throw new apiError(400, "status is required");
   }
-  const data = rfqModel.findBysupplierUserAndUpdate(
+  const data =await rfqModel.findBysupplierUserAndUpdate(
     supplierUser,
     {
       $set: {

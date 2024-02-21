@@ -10,7 +10,6 @@ const catalogueModify = asyncHandler(async (req, res) => {
   if(!supplierUser){
     throw new apiError(400,"Supplier User is required")
   }
-
   if(!customer){
     throw new apiError(400,"Customer is required");
   }
@@ -23,7 +22,7 @@ const catalogueModify = asyncHandler(async (req, res) => {
   if(!customer_visibility){
     throw new apiError(400,"customer visibility is required");
   }
-  const new_data=catalogueModel.findBysupplierUser(
+  const new_data=await catalogueModel.findBysupplierUser(
     supplierUser,
     {
         customer:customer,

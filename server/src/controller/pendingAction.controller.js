@@ -1,48 +1,43 @@
 import {apiResponse} from '../utils/apiResponse.js'
 import {apiError} from '../utils/apiError.js'
 import {asyncHandler} from '../utils/asyncHandler.js'
-import {dashBoardModel} from '../models/dashBoard.models.js'
+import {pendingActionModel} from '../models/pendingAction.models.js'
 
-const dashBoardModify=asyncHandler(async(req,res)=>{
-    const{priority,status}=req.body;
-    const {email}=req.param;
-    if(!email.trim()){
-        throw new apiError(400,"Email is required")
+const pendingActionModify=asyncHandler(async(req,res)=>{
+    const {supplierUser} =req.param;
+    const {priority,status}=req.body;
+    if(!supplierUser){
+        throw new apiError(400,"supplier user is required")
     }
-    const user =dashBoardModel.findByEmailAndUpdate(
-        email,
+    if(!priority){
+        throw new apiError(400,"priority is required")
+    }
+    if(!status){
+        throw new apiError(400,"status is required")
+    }
+    const data=await pendingActionModel.findBysupplierUserAndUpdate(
+        supplierUser,
         {
-            $set:{
-                priority:priority,
-                status:status,
-            }
+            priority:priority,
+            status:status,
         },
         {
             new:true,
-        }   
+        }
     )
-    if(!user){
-        throw new apiError(400,"User Not Found")
-    }
-    res.status(200).json(new apiResponse(200,user,"Data Modified Successfully"))
+    res.status(200).json(new apiResponse(200,data,"data modified successfully"));
 })
 
-const dashBoardFetch=asyncHandler(async(req,res)=>{
-    const {email}=req.params;
-    if(!email.trim()){
-        throw new apiError(400,"Email is required")
+const pendingAction=asyncHandler(async(req,res)=>{
+    const {supplierUser}=req.param;
+    if(!supplierUser){
+        throw new apiError(400,"supplier User is required");
     }
-    const user= await dashBoardModel.findByEmail(email)
-    if(!user)
-    {
-        throw new apiError(400,"User not found")
-    }
-
-    res.status(200).json(new apiResponse(200,user,"data send successfully"))
-
+    const data=await pendingActionModel.find({supplierUser:supplierUser});
+    res.status(200).json(new apiResponse(200,data,"data send successfully"))
 })
 
 export {
-    dashBoardModify,
-    dashBoardFetch,
+    pendingActionModify,
+    pendingAction,
 }  
