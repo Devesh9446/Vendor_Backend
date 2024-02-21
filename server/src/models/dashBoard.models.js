@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
         enum:["invoice-pending","acceptance-pending"],
         default:"acceptance-pending"
     },
+    supplier:{
+        type:String,
+    }
 },{timestamps:true})
 
 const dashBoardModel = mongoose.model("user",userSchema);

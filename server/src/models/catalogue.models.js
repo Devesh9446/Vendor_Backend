@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
     currencies:{
         type:String,
         required:true,
+    },
+    supplier:{
+        type:String,
+    },
+    supplierUser:{
+        type:String,
     }
 },{timestamps:true})
 
