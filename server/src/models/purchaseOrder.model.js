@@ -42,5 +42,4 @@ const purchaseOrder = new mongoose.Schema({
        }
 },{timestamps:true})
 
-const catalogueModel = mongoose.model("user",purchaseOrder);
-module.exports = {catalogueModel};
+export const purchaseOrderModel = mongoose.model("user",purchaseOrder);

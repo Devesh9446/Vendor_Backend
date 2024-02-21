@@ -1,48 +1,42 @@
-import {apiResponse} from '../utils/apiResponse.js'
-import {apiError} from '../utils/apiError.js'
-import {asyncHandler} from '../utils/asyncHandler.js'
-import {dashBoardModel} from '../models/dashBoard.models.js'
+import { asyncHandler } from "../utils/asyncHandler";
+import { apiError } from "../utils/apiError";
+import { apiResponse } from "../utils/apiResponse";
+import { dashboardModel } from "../models/dashBoard.models";
 
-const dashBoardModify=asyncHandler(async(req,res)=>{
-    const{priority,status}=req.body;
-    const {email}=req.param;
-    if(!email.trim()){
-        throw new apiError(400,"Email is required")
+const dashboardCreate=asyncHandler(async(req,res)=>{
+    const {supplierUser} =req.param
+    const {year, month ,price}=req.body
+    if(!supplierUser){
+        throw new apiError(400,"suppier User is required");
     }
-    const user =dashBoardModel.findByEmailAndUpdate(
-        email,
-        {
-            $set:{
-                priority:priority,
-                status:status
-            }
-        },
-        {
-            new:true,
-        }  
-    )
-    if(!user){
-        throw new apiError(400,"User Not Found")
+    if(!year){
+        throw new apiError(400,"year is required");
     }
-    res.status(200).json(new apiResponse(200,user,"Data Modified Successfully"))
+    if(!month){
+        throw new apiError(400,"month is required");
+    }
+    if(!price){
+        throw new apiError(400,"price is required");
+    }
+    const data=[{
+        supplierUser:supplierUser,
+        year:year,
+        month:month,
+        price:price,
+    }]
+    const new_data=await dashboardModel.create(data);
+    res.status(200).json(new apiResponse(200,new_data,"data saved successfully"))
+})
+const dashboard=asyncHandler(async(req,res)=>{
+    const {supplierUser,year} =req.param
+    if(!supplierUser){
+        throw new apiError(400,"suppier User is required");
+    }
+    if(!year){
+        throw new apiError(400,"year is required");
+    }
+    const data=dashboardModel.find({year:year,supplierUser:supplierUser})
+    res.send(200).json(new apiResponse(200,data,"data send seuccessfully"))
 })
 
-const dashBoardFetch=asyncHandler(async(req,res)=>{
-    const {email}=req.params;
-    if(!email.trim()){
-        throw new apiError(400,"Email is required")
-    }
-    const user= await dashBoardModel.findByEmail(email)
-    if(!user)
-    {
-        throw new apiError(400,"User not found")
-    }
-
-    res.status(200).json(new apiResponse(200,user,"data send successfully"))
-
-})
-
-export {
-    dashBoardModify,
-    dashBoardFetch,
-}  
+export {dashboardCreate,dashboard}

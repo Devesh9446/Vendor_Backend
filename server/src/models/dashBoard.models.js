@@ -1,38 +1,22 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
-const userSchema = new mongoose.Schema({
-    code:{
-        type:String,
-        required:true, 
-    },
-    project:{
-        type:String,
-        required:true,
-    },
-    priority:{
-        type:String,
-        enum:["High","Medium","Low"], 
-        default:"High"
-    },
-    totalAmount:{
-        type:String,
-        required:true,
-    },
-    data:{
-        type:String,
-        required:true,
-    },
-    status:{
-        type:String,
-        enum:["invoice-pending","acceptance-pending"],
-        default:"acceptance-pending"
-    },
+const dashboardSchema= new mongoose.Schema({
     supplierUser:{
         type:String,
+        required:true,
+    },
+    year:{
+        type:String,
+        required:true,
+    },
+    month:{
+        type:String,
+        required:true,
+    },
+    price:{
+        type:String,
+        required:true,
     }
-},{timestamps:true})
+},{timeStamps:true});
 
-const dashBoardModel = mongoose.model("user",userSchema);
-module.exports = {dashBoardModel};
-
-  
+export const dashboardModel = mongoose.model("dashboard",dashboardSchema);

@@ -37,5 +37,4 @@ const userSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-const catalogueModel = mongoose.model("user",userSchema);
-module.exports = {catalogueModel};
+export const catalogueModel = mongoose.model("user",userSchema);
