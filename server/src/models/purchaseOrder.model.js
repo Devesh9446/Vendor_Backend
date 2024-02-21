@@ -37,7 +37,7 @@ const purchaseOrder = new mongoose.Schema({
        inw:{
         type:String,
        },
-       supplier:{
+       supplierUser:{
         type:String,
        }
 },{timestamps:true})

@@ -31,7 +31,7 @@ const rfq = new mongoose.Schema({
         default:"Accepted",
         required:true,
        },
-       supplier:{
+       supplierUser:{
         type:String,
        }
 },{timestamps:true})

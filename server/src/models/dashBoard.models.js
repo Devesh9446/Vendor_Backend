@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         enum:["invoice-pending","acceptance-pending"],
         default:"acceptance-pending"
     },
-    supplier:{
+    supplierUser:{
         type:String,
     }
 },{timestamps:true})
