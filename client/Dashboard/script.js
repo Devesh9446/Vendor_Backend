@@ -72,6 +72,36 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         tableBody.appendChild(newRow);
     }
+    //Bar chart year selector
+  var select = document.getElementById("years");
+  var currentYear = new Date().getFullYear();
+
+  for (var year = 2012; year <= 2027; year++) {
+    var option = document.createElement("option");
+    option.value = year;
+    option.text = year;
+    select.appendChild(option);
+  }
+  select.value = currentYear;
+  
+  //For Selecting Supplier
+  var supplierUsers = ["Supplier User 1", "Supplier User 2", "Supplier User 3", "Supplier User 4"];
+
+    // Create select element
+    var select = document.createElement("select");
+    select.setAttribute("name", "supplierUsers");
+    select.setAttribute("id", "supplierUsers");
+
+    // Add options
+    supplierUsers.forEach(function(user) {
+        var option = document.createElement("option");
+        option.setAttribute("value", user);
+        option.text = user;
+        select.appendChild(option);
+    });
+
+    // Append select to container
+    document.getElementById("select").replaceWith(select);
 
     $(document).ready(function () {
         $('#example').DataTable();
