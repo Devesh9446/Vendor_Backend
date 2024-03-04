@@ -1,18 +1,18 @@
-import { apiError } from "../utils/apiError";
-import { apiResponse } from "../utils/apiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
-import { purchaseOrderModel } from "../models/purchaseOrder.model"
+import { apiError } from "../utils/apiError.js";
+import { apiResponse } from "../utils/apiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { purchaseOrder } from "../models/purchaseOrder.model.js"
 
-const purchaseOrder = asyncHandler(async (req, res) => {
+const purchaseOrderFetch = asyncHandler(async (req, res) => {
   const { supplierUser } = req.params;
   if (!supplierUser) {
     throw new apiError(400, "Supplier User required");
   }
-  const data = await purchaseOrderModel.findBysupplierUser(supplierUser);
+  const data = await purchaseOrder.find({supplierUser:supplierUser});
   if (!data) {
-    res.json(400).json(new apiResponse(400, {}, "No data found"));
+    res.status(400).json(new apiResponse(400, {}, "No data found"));
   }
-  res.json(200).json(new apiResponse(200, data, "data send successfully"));
+  res.status(200).json(new apiResponse(200, data, "data send successfully"));
 
 });
 
@@ -26,13 +26,13 @@ const purchaseOrderModify = asyncHandler(async (req, res) => {
   if (!status) {
     throw new apiError(400, "");
   }
-  const data =await purchaseOrderModel.findBysupplierUserAndUpdate(
+  const data =await purchaseOrder.findBysupplierUserAndUpdate(
     supplierUser,
     {
       $set: {
         status: status,
       },
-    },
+    }, 
     {
       new: true,
     }
@@ -41,4 +41,4 @@ const purchaseOrderModify = asyncHandler(async (req, res) => {
 
 });
 
-export { purchaseOrder, purchaseOrderModify };
+export { purchaseOrderFetch, purchaseOrderModify };

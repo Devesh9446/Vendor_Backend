@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const purchaseOrder = new mongoose.Schema({
+const purchaseOrderSchema = new mongoose.Schema({
     code:{
         type:String,
         required:true,
@@ -10,7 +10,7 @@ const purchaseOrder = new mongoose.Schema({
         required:true,
        },
        purchaser:{
-        type:String,
+        type:String, 
         required:true,
        },
        subject:{
@@ -42,4 +42,4 @@ const purchaseOrder = new mongoose.Schema({
        }
 },{timestamps:true})
 
-export const purchaseOrderModel = mongoose.model("user",purchaseOrder);
+export const purchaseOrder = mongoose.model("purchaseOrder",purchaseOrderSchema);

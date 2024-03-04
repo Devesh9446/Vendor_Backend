@@ -15,10 +15,10 @@ const pendingActionSchema = new mongoose.Schema({
         default:"High"
     },
     totalAmount:{
-        type:String, 
+        type:String,  
         required:true,
     },
-    data:{
+    date:{
         type:String,
         required:true,
     },
@@ -32,7 +32,7 @@ const pendingActionSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-export const pendingActionModel = mongoose.model("pendingAction",pendingActionSchema);
+export const pendingAction = mongoose.model("pendingAction",pendingActionSchema);
 
 
   
