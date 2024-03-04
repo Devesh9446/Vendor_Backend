@@ -1,5 +1,4 @@
 const ctx = document.getElementById('barChart');
-
 var barColor= 'blue';
 new Chart(ctx, {
   type: 'bar',

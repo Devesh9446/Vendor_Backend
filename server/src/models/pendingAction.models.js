@@ -15,7 +15,7 @@ const pendingActionSchema = new mongoose.Schema({
         default:"High"
     },
     totalAmount:{
-        type:String,
+        type:String, 
         required:true,
     },
     data:{

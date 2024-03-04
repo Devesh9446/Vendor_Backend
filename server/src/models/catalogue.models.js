@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     customer_visibility:{
         type:String,
         required:true,
-    },
+    }, 
     customer:{
         type:String,
         required:true,

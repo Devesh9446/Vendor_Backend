@@ -15,8 +15,8 @@ const dashboardSchema= new mongoose.Schema({
     },
     price:{
         type:String,
-        required:true,
+        required:true, 
     }
 },{timeStamps:true});
 
-export const dashboardModel = mongoose.model("dashboard",dashboardSchema);
+export const dashboard = mongoose.model("dashboard",dashboardSchema);

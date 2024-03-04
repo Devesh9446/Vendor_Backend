@@ -31,7 +31,7 @@ const pendingActionModify=asyncHandler(async(req,res)=>{
 const pendingAction=asyncHandler(async(req,res)=>{
     const {supplierUser}=req.param;
     if(!supplierUser){
-        throw new apiError(400,"supplier User is required");
+        throw new apiError(400,"supplier User is required"); 
     }
     const data=await pendingActionModel.find({supplierUser:supplierUser});
     res.status(200).json(new apiResponse(200,data,"data send successfully"))

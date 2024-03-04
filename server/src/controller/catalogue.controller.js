@@ -32,7 +32,7 @@ const catalogueModify = asyncHandler(async (req, res) => {
         customer_visibility:customer_visibility,
     },
     {
-        new:true,
+        new:true, 
     }
     )
     res.json(200).json(new apiResponse(200,new_data,"data changed successfully"))
