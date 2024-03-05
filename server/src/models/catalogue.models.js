@@ -1,16 +1,15 @@
 import mongoose from "mongoose"
 
-const userSchema = new mongoose.Schema({
+const CatalogueSchema = new mongoose.Schema({
     product:{
         type:String,
         required:true,
     },
     price:{
         type:String,
-        required:true,
     },
     Uom:{
-        type:String,
+        type:String, 
         required:true,
     },
     customer_visibility:{
@@ -29,12 +28,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    supplier:{
-        type:String,
-    },
     supplierUser:{
         type:String,
+        required:true,
     }
 },{timestamps:true})
 
-export const catalogueModel = mongoose.model("user",userSchema);
+export const catalogue = mongoose.model("catalogue",CatalogueSchema);

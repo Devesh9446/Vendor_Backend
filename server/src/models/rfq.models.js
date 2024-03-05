@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const rfq = new mongoose.Schema(
+const rfqSchema = new mongoose.Schema(
   {
     code: {
       type: String,
@@ -12,7 +12,7 @@ const rfq = new mongoose.Schema(
     },
     purchaser: {
       type: String,
-      required: true,
+      required: true, 
     },
     subject: {
       type: String,
@@ -39,4 +39,4 @@ const rfq = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const rfqModel = mongoose.model("user", rfq);
+export const rfq = mongoose.model("rfq", rfqSchema);
