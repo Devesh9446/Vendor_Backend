@@ -34,7 +34,7 @@ const dashboardFetch=asyncHandler(async(req,res)=>{
         throw new apiError(400,"suppier User is required");
     }
     if(!year){
-        throw new apiError(400,"year is required");
+        throw new apiError(400,"year is required"); 
     }
     try{
         const data=await dashboard.find({year:year,supplierUser:supplierUser})

@@ -5,7 +5,7 @@ import { catalogue } from "../models/catalogue.models.js";
 
 const catalogueModify = asyncHandler(async (req, res) => {
   const { supplierUser } = req.params;
-  const {customer , supplier ,currencies ,price ,customer_visibility} = req.body;
+  const {customer , supplier ,currencies ,price ,customer_visibility,product,Uom} = req.body;
 
   if(!supplierUser){
     throw new apiError(400,"Supplier User is required")
@@ -22,20 +22,37 @@ const catalogueModify = asyncHandler(async (req, res) => {
   if(!customer_visibility){
     throw new apiError(400,"customer visibility is required");
   } 
-  const new_data=await catalogue.findBysupplierUser(
-    supplierUser,
-    {
-        customer:customer,
-        supplier:supplier,
-        currencies:currencies,
-        price:price||"",
-        customer_visibility:customer_visibility,
-    },
-    {
-        new:true, 
-    }
-    )
-    res.json(200).json(new apiResponse(200,new_data,"data changed successfully"))
+  if(!product){
+    throw new apiError(400,"Product name is required");
+  }
+  if(!Uom){
+    throw new apiError(400,"Uom is required");
+  }
+
+  try{
+    const new_data=await catalogue.updateMany(
+      {
+        supplierUser:supplierUser,
+        product:product,
+        Uom:Uom,
+      },
+      {
+        $set:{
+          customer:customer,
+          supplier:supplier,
+          currencies:currencies,
+          price:price||"",
+          customer_visibility:customer_visibility, 
+        }
+      },
+      { 
+          new:true, 
+      }
+      )
+      res.status(200).json(new apiResponse(200,new_data,"data changed successfully"))
+  }catch(error){
+    throw new apiError(`Error:${error}`);
+  }
 });
 
 const catalogueFetch = asyncHandler(async (req, res) => {

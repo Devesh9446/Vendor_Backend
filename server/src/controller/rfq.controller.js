@@ -20,19 +20,40 @@ const rfqFetch = asyncHandler(async (req, res) => {
   }
 });
 
-const rfqModify = asyncHandler(async (req, res) => {
+const rfqModify = asyncHandler(async (req, res) => { 
   const { supplierUser } = req.params;
-  const { status } = req.body;
+  const { status,customer,code,purchaser } = req.body;
 
   if (!supplierUser) {
     throw new apiError(400, "Supplier User is required");
+  }
+  if(!code){
+    throw new apiError(400, "code is required");
+  }
+  if(!purchaser){
+    throw new apiError(400, "purchaser is required");
   }
   if (!status) {
     throw new apiError(400, "status is required");
   }
   try{
-    const data =await rfq.findBysupplierUserAndUpdate(
-      supplierUser,
+    console.log(status);
+    console.log(code);
+    console.log(purchaser)
+    const fetch=await rfq.find({
+      supplierUser:supplierUser,
+        code:code,
+        purchase:purchaser,
+        customer:customer
+    })
+    console.log(fetch);
+    const data =await rfq.updateMany(
+      {
+        supplierUser:supplierUser,
+        code:code,
+        purchase:purchaser,
+        customer:customer
+      },
       {
         $set: {
           status: status,

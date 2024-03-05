@@ -7,38 +7,57 @@ const purchaseOrderFetch = asyncHandler(async (req, res) => {
   const { supplierUser } = req.params;
   if (!supplierUser) {
     throw new apiError(400, "Supplier User required");
+  } 
+  try{
+    const data = await purchaseOrder.find({supplierUser:supplierUser});
+    if (!data) {
+      res.status(400).json(new apiResponse(400, {}, "No data found"));
+    }
+    res.status(200).json(new apiResponse(200, data, "data send successfully"));
+  }catch(error){
+    throw new apiError(`Error:${error}`);
   }
-  const data = await purchaseOrder.find({supplierUser:supplierUser});
-  if (!data) {
-    res.status(400).json(new apiResponse(400, {}, "No data found"));
-  }
-  res.status(200).json(new apiResponse(200, data, "data send successfully"));
-
 });
 
 const purchaseOrderModify = asyncHandler(async (req, res) => {
   const { supplierUser } = req.params;
-  const { status } = req.body;
+  const { status,code,customer,purchaser } = req.body;
 
   if (!supplierUser) {
     throw new apiError(400, "Supplier User is required");
   }
   if (!status) {
-    throw new apiError(400, "");
+    throw new apiError(400, "status is required");
   }
-  const data =await purchaseOrder.findBysupplierUserAndUpdate(
-    supplierUser,
-    {
-      $set: {
-        status: status,
+  if(!code){
+    throw new apiError(400, "code is required");
+  }
+  if(!customer){
+    throw new apiError(400, "customer is required");
+  }
+  if(!purchaser){
+    throw new apiError(400, "purchaser is required");
+  }
+  try{
+    const data =await purchaseOrder.updateMany(
+      {
+        code:code,
+        customer:customer,
+        purchase:purchaser
       },
-    }, 
-    {
-      new: true,
-    }
-  );
-  res.status(200).json(new apiResponse(200, data, "data changed successfully"));
-
+      {
+        $set: {
+          status: status,
+        },
+      }, 
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(new apiResponse(200, data, "data changed successfully"));
+  }catch(error){
+    throw new apiError(400,`Error:${error}`);
+  }
 });
 
 export { purchaseOrderFetch, purchaseOrderModify };

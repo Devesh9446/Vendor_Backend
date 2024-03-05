@@ -29,7 +29,7 @@ const rfqSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["Converted", "Quoted", "Requoted", "Regretted"],
-      default: "Accepted",
+      default: "Converted",
       required: true,
     },
     supplierUser: {
