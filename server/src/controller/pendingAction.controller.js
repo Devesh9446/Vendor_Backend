@@ -46,6 +46,7 @@ const pendingActionModify=asyncHandler(async(req,res)=>{
 
 const pendingActionFetch=asyncHandler(async(req,res)=>{
     const {supplierUser}=req.params;
+    console.log(supplierUser);
     if(!supplierUser){
         throw new apiError(400,"supplier User is required");  
     }

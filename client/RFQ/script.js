@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded',async function() {
         const resp1=await resp.json();
         const data1=resp1.data;
         console.log(data1)
-    
+     
         const tableBody = document.querySelector('#example tbody');
         tableBody.innerHTML='';
     

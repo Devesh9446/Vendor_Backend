@@ -1,40 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const data = {
-        Code: 'BFQ-C1-20-580',
-        Customer: 'Company 1',
-        Purchaser: 'Sudheer',
-        Subject: 'Test',
-        PODate: '2012-08-06',
-        Value: 'Rs.400',
-        Status: 'Accepted',
-        Inv:'-',
-        Inw:'-',
-    };
-
-    const tableBody = document.querySelector('#example tbody');
-
-    for (let i = 0; i < 15; i++) {
-        let newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${data.Code}</td>
-            <td>${data.Customer}</td>
-            <td>${data.Purchaser}</td>
-            <td>${data.Subject}</td>
-            <td>${data.PODate}</td>
-            <td>${data.Value}</td>
-            <td>
-                <select class="colorTextBox">
-                    <option value="1">Accepted</option>
-                    <option value="4">Completed</option>
-                    <option value="2">In-progress</option>
-                    <option value="3">Released</option>
-                </select>
-            </td>
-            <td>${data.Inv}</td>
-            <td>${data.Inw}</td>
-        `;
-        tableBody.appendChild(newRow);
+document.addEventListener('DOMContentLoaded',async function() {
+    const fetchData=async(supplierUser)=>{
+        console.log(supplierUser);
+        const resp=await fetch(`http://localhost:8000/api/v1/users/purchaseOrder/c/${supplierUser}`)
+        const resp1=await resp.json();
+        const data1=resp1.data;
+        const tableBody = document.querySelector('#example tbody');
+        tableBody.innerHTML='';
+    
+        for (let i = 0; i < data1.length; i++) { 
+            let newRow = document.createElement('tr');
+            const data=data1[i];
+            console.log(data);
+            newRow.innerHTML = `
+                <td>${data.code}</td>
+                <td>${data.customer}</td>
+                <td>${data.purchaser}</td>
+                <td>${data.subject}</td>
+                <td>${data.pODate}</td>
+                <td>${data.value}</td>
+                <td>
+                    <select class="colorTextBox">
+                        <option value="1">Accepted</option>
+                        <option value="4">Completed</option>
+                        <option value="2">In-progress</option>
+                        <option value="3">Released</option>
+                    </select>
+                </td>
+                <td>${data.inv}</td>
+                <td>${data.inw}</td>
+            `;
+            tableBody.appendChild(newRow);
+        }
     }
+    await fetchData('Supplier User 1');
+    document.getElementById("select").addEventListener("change",async function(){
+        const supplierUser=document.getElementById(select).value;
+        await fetchData(supplierUser);
+    })
 
     $(document).ready(function () {
         $('#example').DataTable();

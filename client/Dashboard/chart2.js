@@ -6,7 +6,7 @@ new Chart (ctx1, {
         'Disputed',
         'Invoiced',
         'Pending Approval',
-        'accounts-pending-approval'
+        'accounts-pending-approval' 
       ],
       datasets: [{
         label: 'My First Dataset',

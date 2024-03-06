@@ -21,8 +21,8 @@ router.route("/purchaseOrder/c/:supplierUser").patch(purchaseOrderModify);
 
 router.route("/rfq/c/:supplierUser").get(rfqFetch);
 router.route("/rfq/c/:supplierUser").patch(rfqModify);
-
+ 
 router.route("/catalogue/c/:supplierUser").get(catalogueFetch);
 router.route("/catalogue/c/:supplierUser").patch(catalogueModify);
-
+ 
 export default router;   
