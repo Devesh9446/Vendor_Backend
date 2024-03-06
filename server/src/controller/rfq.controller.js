@@ -4,8 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { rfq } from "../models/rfq.models.js";
 
 const rfqFetch = asyncHandler(async (req, res) => {
-  console.log(req.params);
   const { supplierUser } = req.params;
+  console.log(supplierUser);
   if (!supplierUser) {
     throw new apiError(400, "Supplier User required");
   }
@@ -41,7 +41,7 @@ const rfqModify = asyncHandler(async (req, res) => {
     console.log(code);
     console.log(purchaser)
     const fetch=await rfq.find({
-      supplierUser:supplierUser,
+      supplierUser:supplierUser, 
         code:code,
         purchaser:purchaser,
         customer:customer
@@ -70,3 +70,4 @@ const rfqModify = asyncHandler(async (req, res) => {
 });
 
 export { rfqFetch, rfqModify };
+ 
