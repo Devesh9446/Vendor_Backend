@@ -43,7 +43,7 @@ const rfqModify = asyncHandler(async (req, res) => {
     const fetch=await rfq.find({
       supplierUser:supplierUser,
         code:code,
-        purchase:purchaser,
+        purchaser:purchaser,
         customer:customer
     })
     console.log(fetch);
@@ -51,7 +51,7 @@ const rfqModify = asyncHandler(async (req, res) => {
       {
         supplierUser:supplierUser,
         code:code,
-        purchase:purchaser,
+        purchaser:purchaser,
         customer:customer
       },
       {
