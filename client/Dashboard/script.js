@@ -89,11 +89,11 @@ document.addEventListener('DOMContentLoaded',async function() {
                 <td>${data.project}</td>
                 <td>
                     <select>
-                        <option value="1">High
+                        <option value="1" ${data.priority === 'High' ? 'selected' : ''}>High
                         </option>
-                        <option value="2">Medium
+                        <option value="2" ${data.priority === 'Medium' ? 'selected' : ''}>Medium
                         </option>
-                        <option value="3">Low
+                        <option value="3" ${data.priority === 'Low' ? 'selected' : ''}>Low
                         </option>
                     </select>
                 </td>
@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded',async function() {
                 <td>${data.date}</td>
                 <td>
                     <select class="colorTextBox">
-                        <option value="1">accpetance-pending</option>
-                        <option value="2">invoice-pending</option>
+                        <option value="1" ${data.status === 'accpetance-pending' ? 'selected' : ''}>accpetance-pending</option>
+                        <option value="2" ${data.status === 'invoice-pending' ? 'selected' : ''}>invoice-pending</option>
                     </select>
                 </td>
             `;

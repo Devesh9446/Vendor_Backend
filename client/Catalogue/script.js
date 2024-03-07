@@ -12,9 +12,7 @@ new DataTable('#catalogue-example', {
         const resp=await fetch(`http://localhost:8000/api/v1/users/catalogue/c/${supplierUser}`);
         const resp1=await resp.json();
         const data1=resp1.data;
-        console.log(data1);
         let tableBody = document.querySelector('#catalogue-example tbody');
-        console.log(tableBody);
         tableBody.innerHTML='';
         for (let i = 0; i < data1.length; i++) {
             let newRow = document.createElement('tr');
@@ -23,7 +21,7 @@ new DataTable('#catalogue-example', {
                 <td>${i+1}</td>
                 <td>${data.product}</td>
                 <td>
-                    <input type="number">
+                    <input type="number" value=${data.price}>
                 </td>
                 <td>${data.Uom}</td>
                 <td>
@@ -36,7 +34,7 @@ new DataTable('#catalogue-example', {
         }
      }
      await fetchData('Supplier User 1');
-     document.getElementById('select').addEventListener('change',async function(){
-        await fetchData(document.getElementById('select').value);
+     document.getElementById("select").addEventListener('change',async function(){
+        await fetchData(document.getElementById("select").value);
      })
  })

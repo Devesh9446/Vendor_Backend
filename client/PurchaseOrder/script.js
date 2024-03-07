@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded',async function() {
         const tableBody = document.querySelector('#example tbody');
         tableBody.innerHTML='';
     
-        for (let i = 0; i < data1.length; i++) { 
+        for (let i = 0; i < data1.length; i++) {
             let newRow = document.createElement('tr');
             const data=data1[i];
             console.log(data);
@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded',async function() {
                 <td>${data.customer}</td>
                 <td>${data.purchaser}</td>
                 <td>${data.subject}</td>
-                <td>${data.pODate}</td>
+                <td>${data.poDate}</td>
                 <td>${data.value}</td>
                 <td>
                     <select class="colorTextBox">
-                        <option value="1">Accepted</option>
-                        <option value="4">Completed</option>
-                        <option value="2">In-progress</option>
-                        <option value="3">Released</option>
+                        <option value="1" ${data.status === 'Accepted' ? 'selected' : ''}>Accepted</option>
+                        <option value="4" ${data.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                        <option value="2" ${data.status === 'In-progress' ? 'selected' : ''}>In-progress</option>
+                        <option value="3" ${data.status === 'Released' ? 'selected' : ''}>Released</option>
                     </select>
                 </td>
                 <td>${data.inv}</td>
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded',async function() {
     }
     await fetchData('Supplier User 1');
     document.getElementById("select").addEventListener("change",async function(){
-        const supplierUser=document.getElementById(select).value;
+        const supplierUser=document.getElementById("select").value;
         await fetchData(supplierUser);
     })
 
